@@ -4,6 +4,7 @@ require_once 'db.php';
 
 // DB利用
 
+// 変更箇所
 function get_item($db, $item_id){
   $sql = "
     SELECT
@@ -16,10 +17,10 @@ function get_item($db, $item_id){
     FROM
       items
     WHERE
-      item_id = {$item_id}
+      item_id = :item_id
   ";
-
-  return fetch_query($db, $sql);
+  $params = array(':item_id' => $item_id);
+  return fetch_query($db, $sql, $params);
 }
 
 function get_items($db, $is_open = false){
@@ -36,11 +37,12 @@ function get_items($db, $is_open = false){
   ';
   if($is_open === true){
     $sql .= '
-      WHERE status = 1
+      WHERE status = :status
     ';
+    $params = array(':status' => '1');
   }
 
-  return fetch_all_query($db, $sql);
+  return fetch_all_query($db, $sql, $params);
 }
 
 function get_all_items($db){
@@ -71,6 +73,7 @@ function regist_item_transaction($db, $name, $price, $stock, $status, $image, $f
   
 }
 
+// 変更箇所
 function insert_item($db, $name, $price, $stock, $filename, $status){
   $status_value = PERMITTED_ITEM_STATUSES[$status];
   $sql = "
@@ -82,42 +85,45 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
         image,
         status
       )
-    VALUES('{$name}', {$price}, {$stock}, '{$filename}', {$status_value});
+    VALUES(:name, :price, :stock, :filename, :status_value);
   ";
-
-  return execute_query($db, $sql);
+  $params = array(':name' => $name , ':price' => $price, ':stock' => $stock, ':filename' => $filename, ':status_value' => $status_value);
+  return execute_query($db, $sql, $params);
 }
 
+// 変更箇所
 function update_item_status($db, $item_id, $status){
   $sql = "
     UPDATE
       items
     SET
-      status = {$status}
+      status = :status
     WHERE
-      item_id = {$item_id}
+      item_id = :item_id
     LIMIT 1
   ";
-  
-  return execute_query($db, $sql);
+  $params = array(':status' => $status, ':item_id' => $item_id);
+  return execute_query($db, $sql, $params);
 }
 
+// 変更箇所
 function update_item_stock($db, $item_id, $stock){
   $sql = "
     UPDATE
       items
     SET
-      stock = {$stock}
+      stock = :stock
     WHERE
-      item_id = {$item_id}
+      item_id = :item_id
     LIMIT 1
   ";
-  
-  return execute_query($db, $sql);
+  $params = array(':stock' => $stock, ':item_id' => $item_id);
+  return execute_query($db, $sql, $params);
 }
 
 function destroy_item($db, $item_id){
   $item = get_item($db, $item_id);
+  // dd($item);
   if($item === false){
     return false;
   }
@@ -136,11 +142,11 @@ function delete_item($db, $item_id){
     DELETE FROM
       items
     WHERE
-      item_id = {$item_id}
+      item_id = :item_id
     LIMIT 1
   ";
-  
-  return execute_query($db, $sql);
+  $params = array(':item_id' => $item_id);
+  return execute_query($db, $sql, $params);
 }
 
 
