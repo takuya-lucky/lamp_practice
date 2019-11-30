@@ -147,6 +147,6 @@ function input_check($int) {
     return $int;
   } else {
     set_error('入力値エラー。不正な値です。');
-    return false;
+    return null;
   }
 }
