@@ -22,14 +22,17 @@ $db = get_db_connect();
 // user_idをデータベースに接続して、判定しその値（user名）を$userに代入する
 $user = get_login_user($db);
 
-// ユーザーのタイプ（管理者か利用者）の設定ができていなれければログインページに移動する
+// ユーザーのタイプ（管理者か利用者）で管理者でなければ、login.phpに移動する
 if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+// post送信でitem_idが送られてきていれば、変数$item_idに代入する
 $item_id = get_post('item_id');
+// post送信でchanges_toが送られてきていれば、変数$changes_toに代入する
 $changes_to = get_post('changes_to');
 
+// 商品の公開・非公開の変更の処理
 if($changes_to === 'open'){
   update_item_status($db, $item_id, ITEM_STATUS_OPEN);
   set_message('ステータスを変更しました。');
@@ -40,5 +43,5 @@ if($changes_to === 'open'){
   set_error('不正なリクエストです。');
 }
 
-
+// 商品管理ページに移動する(admin.php)
 redirect_to(ADMIN_URL);

@@ -16,7 +16,7 @@ function get_user($db, $user_id){
       user_id = :user_id
     LIMIT 1
   ";
-  $params = array(':user_id' => input_check($user_id));
+  $params = array(':user_id' => $user_id);
   return fetch_query($db, $sql, $params);
 }
 

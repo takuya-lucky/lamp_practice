@@ -139,14 +139,3 @@ function is_valid_upload_image($image){
 function h ($string) {
   return htmlspecialchars($string, ENT_QUOTES, 'utf-8');
 }
-
-// 追加要素（課題SQLインジェクションの防止:追加課題)
-// 在庫数変更の処理の際のSQLインジェクションの防止為の関数
-function input_check($int) {
-  if (preg_match('/^[0-9]+$/', $int)) {
-    return $int;
-  } else {
-    set_error('入力値エラー。不正な値です。');
-    return null;
-  }
-}
