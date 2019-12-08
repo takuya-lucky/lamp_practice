@@ -26,6 +26,10 @@ $user = get_login_user($db);
 if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
+
+// post送信が行われる前にセッショントークンによる適正ユーザーの判定
+validate_csrf_token();
+
 // post送信で送られたnameを変数$nameに代入する
 $name = get_post('name');
 // post送信で送られたpriceを変数$priceに代入する

@@ -18,7 +18,7 @@ if(is_logined() === false){
 
 // データベースへの接続の設定$dbに代入する
 $db = get_db_connect();
-// データベースに接続して、ユーザーネームを探して、代入する
+// データベースに接続して、ユーザーデータを探して、代入する
 $user = get_login_user($db);
 
 // 管理者でなければ、login.pnpに移動する
@@ -28,6 +28,9 @@ if(is_admin($user) === false){
 
 // 非公開商品を読み込みそれを$itemsに代入する
 $items = get_all_items($db);
+
+// トークンの生成とセット
+$token = get_csrf_token();
 
 // エラーがあっても、view.phpを読み込む
 include_once '../view/admin_view.php';

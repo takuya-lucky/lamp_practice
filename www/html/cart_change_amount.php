@@ -23,6 +23,9 @@ $db = get_db_connect();
 // データベースに接続して、ユーザーネームを探して、$userに代入する
 $user = get_login_user($db);
 
+// post送信が行われる前にセッショントークンによる適正ユーザーの判定
+validate_csrf_token();
+
 // post送信で送られたcart_idを$cart_idに代入する
 $cart_id = get_post('cart_id');
 // poar送信で送られたamountを$amountに代入する

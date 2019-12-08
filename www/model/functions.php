@@ -85,6 +85,7 @@ function get_upload_filename($file){
   return get_random_string() . '.' . $ext;
 }
 
+// hashでuniqidで生成した13文字の値を不可逆性の値に変換をして、base_convartで中身の基数を16進数から36進数に変換をして、substrで0番目（一番最初）から20番目（$lengthで指定）を取り出す
 function get_random_string($length = 20){
   return substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, $length);
 }
@@ -138,4 +139,28 @@ function is_valid_upload_image($image){
 // htmlにおける特殊文字をエスケープするためのユーザー定義関数
 function h ($string) {
   return htmlspecialchars($string, ENT_QUOTES, 'utf-8');
+}
+
+//トークンを作る処理。get_random_stringから48の文字・数字の不可逆性の値を取得して、セッションに保存する
+function get_csrf_token() {
+  $token = get_random_string(48);
+  set_session('csrf_token', $token);
+  return $token;
+}
+
+//トークンを判定する処理。セッションに保存されているトークンと同一のものかどうか判定する。エラーが起きた場合はリダイレクトさせる
+function is_valid_csrf_token($token){
+  if ($token === '' || $token !== get_session('csrf_token')) {
+    return false;
+  } 
+  return true;
+}
+
+// 不正なアクセスを検知した場合のエラー処理 
+function validate_csrf_token() {
+  $token = get_post('csrf_token');
+  if (is_valid_csrf_token($token) === false) {
+    set_error('不正なアクセスです。');
+    redirect_to(LOGIN_URL);
+  } 
 }
