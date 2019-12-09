@@ -1,15 +1,17 @@
 <?php
-
+// 変数等の中身を確認する
 function dd($var){
   var_dump($var);
   exit();
 }
 
+// $urlにあるページのURLに移動する
 function redirect_to($url){
   header('Location: ' . $url);
   exit;
 }
 
+// $_getに中身が入っているかの確認を行う。返り値・戻り値は送信したデータか空。
 function get_get($name){
   if(isset($_GET[$name]) === true){
     return $_GET[$name];
@@ -17,6 +19,7 @@ function get_get($name){
   return '';
 }
 
+// $_postに中身が入っているかの確認を行う。返り値・戻り値は送信したデータか空。
 function get_post($name){
   if(isset($_POST[$name]) === true){
     return $_POST[$name];
@@ -24,6 +27,7 @@ function get_post($name){
   return '';
 }
 
+// $_FILESに中身が入っているかの確認を行う。返り値・戻り値は送信したデータか空。
 function get_file($name){
   if(isset($_FILES[$name]) === true){
     return $_FILES[$name];
@@ -31,6 +35,7 @@ function get_file($name){
   return array();
 }
 
+// $_SESSIONに中身が入っているかの確認を行う。返り値・戻り値は送信したデータか空。
 function get_session($name){
   if(isset($_SESSION[$name]) === true){
     return $_SESSION[$name];
@@ -38,14 +43,17 @@ function get_session($name){
   return '';
 }
 
+// $_SESSIONにある変数を代入する。返り値は$_SESSINO['name']
 function set_session($name, $value){
   $_SESSION[$name] = $value;
 }
 
+// $_SESSIONに$errorを代入する。返り値は$_SESSION['_error']
 function set_error($error){
   $_SESSION['__errors'][] = $error;
 }
 
+// $_SESSIONに_errorsが入っているかの確認を行い。なければ、配列を返り値・戻り値とし、その後、$_SESSIONに空の配列を入れる。返り値・戻り値は$errors
 function get_errors(){
   $errors = get_session('__errors');
   if($errors === ''){
@@ -55,14 +63,17 @@ function get_errors(){
   return $errors;
 }
 
+// $_SESSIONにエラーが入っているかの確認を行う。返り値・戻り値はtureまたはfalse
 function has_error(){
   return isset($_SESSION['__errors']) && count($_SESSION['__errors']) !== 0;
 }
 
+// $_SESSIONに$messageを代入する。返り値は$_SESSION['_message']
 function set_message($message){
   $_SESSION['__messages'][] = $message;
 }
 
+// $_SESSIONに_messageが入っているかの確認を行い。なければ、配列を返り値・戻り値とし、その後、$_SESSIONに空の配列を入れる。返り値・戻り値は$message
 function get_messages(){
   $messages = get_session('__messages');
   if($messages === ''){
@@ -72,10 +83,12 @@ function get_messages(){
   return $messages;
 }
 
+// $_SESSIONにuser_id入っているかの判定を行う。返り値・戻り値はtrueまたはfalse
 function is_logined(){
   return get_session('user_id') !== '';
 }
 
+// アップロードするファイルの名前を得る。返り値・戻り値はランダムな文字列+ファイルの形式
 function get_upload_filename($file){
   if(is_valid_upload_image($file) === false){
     return '';
@@ -148,7 +161,7 @@ function get_csrf_token() {
   return $token;
 }
 
-//トークンを判定する処理。セッションに保存されているトークンと同一のものかどうか判定する。エラーが起きた場合はリダイレクトさせる
+//トークンを判定する処理。セッションに保存されているトークンと同一のものかどうか判定する
 function is_valid_csrf_token($token){
   if ($token === '' || $token !== get_session('csrf_token')) {
     return false;
