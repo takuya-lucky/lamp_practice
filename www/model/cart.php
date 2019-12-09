@@ -1,8 +1,10 @@
 <?php 
+// エラーがなければ、functions.phpファイルを読み込む
 require_once 'functions.php';
+// エラーがなければ、db.phpのファイルを読み込む
 require_once 'db.php';
 
-// 変更箇所
+// select文でcartsテーブルとitemsテーブルを結合している(item_idを基に)。返り値・戻り値はuser_idを基にテーブルのレコードを読み取り、カートに入っている商品
 function get_user_carts($db, $user_id){
   $sql = "
     SELECT
@@ -28,7 +30,7 @@ function get_user_carts($db, $user_id){
   return fetch_all_query($db, $sql, $params);
 }
 
-//　変更箇所
+// select文でcartsテーブルとitemsテーブルを結合している(item_idを基に)。返り値・戻り値はuser_idとitem_idを基に、fetch_queryで一致するもの。
 function get_user_cart($db, $user_id, $item_id){
   $sql = "
     SELECT
@@ -56,6 +58,7 @@ function get_user_cart($db, $user_id, $item_id){
   return fetch_query($db, $sql, $params);
 }
 
+// 返り値・戻り値はget_user_cartの結果を基に、一致するものがあれば、update_cart_amountの処理。一致するものがなければ、insert_cartの処理。
 function add_cart($db, $item_id, $user_id) {
   $cart = get_user_cart($db, $item_id, $user_id);
   if($cart === false){
@@ -64,7 +67,7 @@ function add_cart($db, $item_id, $user_id) {
   return update_cart_amount($db, $cart['cart_id'], $cart['amount'] + 1);
 }
 
-// 変更箇所
+// insert文で、新たにカートに商品を1つ追加する。(注文数1)。返り値・戻り値は商品の追加。
 function insert_cart($db, $item_id, $user_id, $amount = 1){
   $sql = "
     INSERT INTO
@@ -79,7 +82,7 @@ function insert_cart($db, $item_id, $user_id, $amount = 1){
   return execute_query($db, $sql, $params);
 }
 
-// 変更箇所
+// update文で$amountの数分カートにある商品を増やす。返り値・戻り値はcart_idを基にamountを増やすこと。
 function update_cart_amount($db, $cart_id, $amount){
     $sql = "
     UPDATE 
@@ -95,7 +98,7 @@ function update_cart_amount($db, $cart_id, $amount){
     return execute_query($db, $sql, $params);
   }
 
-  // 変更箇所
+  // delete文でカートの商品をcart_idを基に削除する。返り値・戻り値はテーブルからの削除処理。
 function delete_cart($db, $cart_id){
   $sql = "
     DELETE FROM
@@ -108,6 +111,7 @@ function delete_cart($db, $cart_id){
   return execute_query($db, $sql, $params);
 }
 
+// 在庫の数が注文数を超えていないかの確認。返り値は購入後カート内商品の削除処理を行う。
 function purchase_carts($db, $carts){
   if(validate_cart_purchase($carts) === false){
     return false;
@@ -125,7 +129,7 @@ function purchase_carts($db, $carts){
   delete_user_carts($db, $carts[0]['user_id']);
 }
 
-// 変更箇所
+// delete文で、カート内の商品を削除する。返り値・戻り値は商品の削除
 function delete_user_carts($db, $user_id){
   $sql = "
     DELETE FROM
@@ -137,7 +141,7 @@ function delete_user_carts($db, $user_id){
   return execute_query($db, $sql, $params);
 }
 
-
+// 会計金額の計算を行っている。返り値・戻り値は値段×購入数
 function sum_carts($carts){
   $total_price = 0;
   foreach($carts as $cart){
@@ -146,6 +150,7 @@ function sum_carts($carts){
   return $total_price;
 }
 
+// 商品が購入できるかの確認の処理を行っている。カートの中に商品があるかどうか、公開商品かどうか、注文数が在庫数を超えていないかどうかを確認し、全て条件を満たせばtrue、1つでも満たせなければ、falseが返り値・戻り値となる。
 function validate_cart_purchase($carts){
   if(count($carts) === 0){
     set_error('カートに商品が入っていません。');

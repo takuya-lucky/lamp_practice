@@ -1,3 +1,4 @@
+<?php header(FRAME_OPTION); ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

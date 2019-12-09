@@ -37,8 +37,9 @@ define('FINISH_URL', '/finish.php');
 // 商品管理ページの設定
 define('ADMIN_URL', '/admin.php');
 
-
+// 正規表現の設定。英数字での1文字以上の入力を条件とする(大文字・小文字は問わない)。英数字以外の入力は受け付けない。
 define('REGEXP_ALPHANUMERIC', '/\A[0-9a-zA-Z]+\z/');
+// 正規表現の設定。正の整数が1以上または0が入力されていることを条件とする。数字以外の入力は受け付けない。
 define('REGEXP_POSITIVE_INTEGER', '/\A([1-9][0-9]*|0)\z/');
 
 // ユーザーネームの登録の際の最小文字数の設定
@@ -76,3 +77,6 @@ define('PERMITTED_IMAGE_TYPES', array(
   IMAGETYPE_JPEG => 'jpg',
   IMAGETYPE_PNG => 'png',
 ));
+
+// フレーム内の全てのページの読み込みを禁止する
+define('FRAME_OPTION', 'X-Frame-Options: DENY');
