@@ -112,4 +112,3 @@ function insert_user($db, $name, $password){
   $params = array(':name' => $name, ':password' => $password);
   return execute_query($db, $sql, $params);
 }
-

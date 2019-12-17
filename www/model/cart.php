@@ -169,4 +169,3 @@ function validate_cart_purchase($carts){
   }
   return true;
 }
-
