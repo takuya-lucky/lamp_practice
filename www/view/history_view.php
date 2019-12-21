@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-        <?php foreach($history as $value) { ?>
+        <?php foreach($histories as $value) { ?>
             <tr>
                 <td><?php print h($value['history_id']); ?></td>
                 <td><?php print h($value['created']); ?></td>

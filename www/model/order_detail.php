@@ -21,13 +21,14 @@ function make_purchase_detail($db, $history_id, $carts) {
   }
   
   // 購入明細を取得する。管理者のみ全てのユーザーの明細を取得できる。
-  function get_purchase_detail($db, $history) {
+  function get_purchase_details($db, $history) {
     $sql = "
       SELECT
         items.item_id,
         items.name,
         order_histories.history_id,
         order_histories.created,
+        order_histories.user_id,
         order_details.amount,
         order_details.purchased_price
       FROM

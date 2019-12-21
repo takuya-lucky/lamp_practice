@@ -26,7 +26,7 @@ $db = get_db_connect();
 $user = get_login_user($db);
 
 // 購入履歴の読み込み
-$history = get_purchase_history($db, $user);
+$histories = get_purchase_histories($db, $user);
 
 
 // エラーがあっても、view.phpを読み込む

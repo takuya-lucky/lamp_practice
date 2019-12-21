@@ -14,7 +14,7 @@ function make_purchase_history($db, $user) {
 }
 
 // 購入履歴・詳細を作るためのレコードを取り出す。管理者ユーザーの場合は全ての履歴の閲覧が可能。他のユーザーは自身の履歴のみ閲覧可能。
-function get_purchase_history($db, $user) {
+function get_purchase_histories($db, $user) {
     $sql = "
     SELECT
       order_details.history_id,

@@ -103,10 +103,12 @@ function get_random_string($length = 20){
   return substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, $length);
 }
 
+// アップロードした画像の保存先の指定
 function save_image($image, $filename){
   return move_uploaded_file($image['tmp_name'], IMAGE_DIR . $filename);
 }
 
+// アップロードした画像を削除する
 function delete_image($filename){
   if(file_exists(IMAGE_DIR . $filename) === true){
     unlink(IMAGE_DIR . $filename);
@@ -116,26 +118,28 @@ function delete_image($filename){
   
 }
 
-
-
+// 文字（数字）の長さの指定。
 function is_valid_length($string, $minimum_length, $maximum_length = PHP_INT_MAX){
   $length = mb_strlen($string);
   return ($minimum_length <= $length) && ($length <= $maximum_length);
 }
 
+// 正規表現による検証。英数字一文字以上の入力。
 function is_alphanumeric($string){
   return is_valid_format($string, REGEXP_ALPHANUMERIC);
 }
 
+// 正規表現による検証。正の整数1以上もしくは0を入力する。
 function is_positive_integer($string){
   return is_valid_format($string, REGEXP_POSITIVE_INTEGER);
 }
 
+// 正規表現によるマッチング。あっているかどうかを検証。正しい場合は1を返す。
 function is_valid_format($string, $format){
   return preg_match($format, $string) === 1;
 }
 
-
+// アップロードする画像の判定。ファイルの拡張子が正しいかどうか判定する。
 function is_valid_upload_image($image){
   if(is_uploaded_file($image['tmp_name']) === false){
     set_error('ファイル形式が不正です。');

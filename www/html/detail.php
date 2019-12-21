@@ -25,13 +25,25 @@ $db = get_db_connect();
 // データベースに接続して、ユーザーデータを探して、代入する
 $user = get_login_user($db);
 
-$history = get_get('history_id');
+// history_idを変数に代入する
+$history_id = get_get('history_id');
+// 代入したhistory_idが入っているかの検証
+if ($history_id === '') {
+  set_error('不正なアクセスです。');
+  redirect_to(HOME_URL);
+} 
 
 // 購入明細の読み込み
-$detail = get_purchase_detail($db, $history);
+$details = get_purchase_details($db, $history_id);
+
+// 購入明細を見るユーザーが明細に登録されているユーザーと合致しているかの確認
+if ($details[0]['user_id'] !== $user['user_id'] && is_admin($user) === false) {
+  set_error('不正なアクセスです。');
+  redirect_to(HISTORY_URL);
+}
 
 // 合計金額を出す
-$total_price = sum_purchased($detail);
+$total_price = sum_purchased($details);
 
 // エラーがあっても、view.phpを読み込む
 include_once '../view/detail_view.php';

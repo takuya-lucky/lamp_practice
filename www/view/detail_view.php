@@ -23,7 +23,7 @@
             <th>購入日時</th>
             <th>合計金額</th>
         </tr>
-        <?php foreach($detail as $value) { ?>
+        <?php foreach($details as $value) { ?>
             <tr>
                 <td><?php print h($value['history_id']); ?></td>
                 <td><?php print h($value['created']); ?></td>
@@ -38,10 +38,10 @@
           </tr>
         </thead>
         <tbody>
-        <?php foreach($detail as $value) { ?>
+        <?php foreach($details as $value) { ?>
             <tr>
                 <td><?php print h($value['name']); ?></td>
-                <td><?php print h($value['purchased_price']); ?></td>
+                <td><?php print h(number_format($value['purchased_price'])); ?></td>
                 <td><?php print h($value['amount']); ?></td>
                 <td><?php print h(number_format($value['purchased_price'] * $value['amount'])); ?></td>
             </tr>
