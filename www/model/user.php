@@ -2,7 +2,7 @@
 require_once 'functions.php';
 require_once 'db.php';
 
-// 変更箇所
+// usersテーブルからuser_idを基に一列レコードを読み込む
 function get_user($db, $user_id){
   $sql = "
     SELECT
@@ -20,7 +20,7 @@ function get_user($db, $user_id){
   return fetch_query($db, $sql, $params);
 }
 
-// 変更箇所
+// usersテーブルからnameを基に一列レコードを読み込む
 function get_user_by_name($db, $name){
   $sql = "
     SELECT
@@ -38,6 +38,7 @@ function get_user_by_name($db, $name){
   return fetch_query($db, $sql, $params);
 }
 
+// name若しくはpasswordが参照したユーザーと合致するかどうかの確認
 function login_as($db, $name, $password){
   $user = get_user_by_name($db, $name);
   if($user === false || $user['password'] !== $password){
@@ -47,12 +48,14 @@ function login_as($db, $name, $password){
   return $user;
 }
 
+// $login_user_idに$_SESSION['user_id']を代入する
 function get_login_user($db){
   $login_user_id = get_session('user_id');
 
   return get_user($db, $login_user_id);
 }
 
+// ユーザーの登録処理を行う。
 function regist_user($db, $name, $password, $password_confirmation) {
   if( is_valid_user($name, $password, $password_confirmation) === false){
     return false;
@@ -61,10 +64,12 @@ function regist_user($db, $name, $password, $password_confirmation) {
   return insert_user($db, $name, $password);
 }
 
+// 管理者かどうかの判定を行う。
 function is_admin($user){
   return $user['type'] === USER_TYPE_ADMIN;
 }
 
+// ユーザー名とパスワードが正しく入力できているか確認を行う。
 function is_valid_user($name, $password, $password_confirmation){
   // 短絡評価を避けるため一旦代入。
   $is_valid_user_name = is_valid_user_name($name);
@@ -72,6 +77,7 @@ function is_valid_user($name, $password, $password_confirmation){
   return $is_valid_user_name && $is_valid_password ;
 }
 
+// ユーザー名が既定のルールで入力されているかの確認。
 function is_valid_user_name($name) {
   $is_valid = true;
   if(is_valid_length($name, USER_NAME_LENGTH_MIN, USER_NAME_LENGTH_MAX) === false){
@@ -85,6 +91,7 @@ function is_valid_user_name($name) {
   return $is_valid;
 }
 
+// パスワードが既定のルールで入力されているかの確認。
 function is_valid_password($password, $password_confirmation){
   $is_valid = true;
   if(is_valid_length($password, USER_PASSWORD_LENGTH_MIN, USER_PASSWORD_LENGTH_MAX) === false){
@@ -102,7 +109,7 @@ function is_valid_password($password, $password_confirmation){
   return $is_valid;
 }
 
-// 変更箇所
+// ユーザーの登録を行う。
 function insert_user($db, $name, $password){
   $sql = "
     INSERT INTO
@@ -112,4 +119,3 @@ function insert_user($db, $name, $password){
   $params = array(':name' => $name, ':password' => $password);
   return execute_query($db, $sql, $params);
 }
-

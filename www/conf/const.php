@@ -36,6 +36,10 @@ define('CART_URL', '/cart.php');
 define('FINISH_URL', '/finish.php');
 // 商品管理ページの設定
 define('ADMIN_URL', '/admin.php');
+// 購入履歴ページの設定
+define('HISTORY_URL', '/history.php');
+// 購入明細ページの設定
+define('DETAIL_URL', '/detail.php');
 
 // 正規表現の設定。英数字での1文字以上の入力を条件とする(大文字・小文字は問わない)。英数字以外の入力は受け付けない。
 define('REGEXP_ALPHANUMERIC', '/\A[0-9a-zA-Z]+\z/');

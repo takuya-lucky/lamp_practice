@@ -12,7 +12,7 @@ CREATE TABLE 'order_details'(
     'item_id' int,
     'amount' int,
     'purchased_price' int,
-    'created'  datetime,
-    'updated' datetime,
+    'created' datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    'updated' datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key('detail_id')
 );

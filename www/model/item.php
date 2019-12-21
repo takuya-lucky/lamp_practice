@@ -1,10 +1,12 @@
 <?php
+// エラーがなければ、functions.phpファイルを読み込む
 require_once 'functions.php';
+// エラーがなければ、db.phpファイルを読み込む
 require_once 'db.php';
 
 // DB利用
 
-// 変更箇所
+// itemsテーブルにあるレコードをitem_idに基づいて一列取り出す。
 function get_item($db, $item_id){
   $sql = "
     SELECT
@@ -23,6 +25,7 @@ function get_item($db, $item_id){
   return fetch_query($db, $sql, $params);
 }
 
+// 全ての商品の取得(is_openがfalse、trueによって取得商品が変わる)
 function get_items($db, $is_open = false){
   $sql = '
     SELECT
@@ -45,14 +48,17 @@ function get_items($db, $is_open = false){
   return fetch_all_query($db, $sql, $params);
 }
 
+// get_itemsを実行する($is_open = false)
 function get_all_items($db){
   return get_items($db);
 }
 
+// get_itemsを実行する($is_open = true)
 function get_open_items($db){
   return get_items($db, true);
 }
 
+// 商品を登録する際の値がそれぞれ変数に適切に入っているかの確認。
 function regist_item($db, $name, $price, $stock, $status, $image){
   $filename = get_upload_filename($image);
   if(validate_item($name, $price, $stock, $filename, $status) === false){
@@ -61,6 +67,7 @@ function regist_item($db, $name, $price, $stock, $status, $image){
   return regist_item_transaction($db, $name, $price, $stock, $status, $image, $filename);
 }
 
+// トランザクションを行い、insert_itemとsave_imageが実行できれば、コミットを行う。
 function regist_item_transaction($db, $name, $price, $stock, $status, $image, $filename){
   $db->beginTransaction();
   if(insert_item($db, $name, $price, $stock, $filename, $status) 
@@ -73,7 +80,7 @@ function regist_item_transaction($db, $name, $price, $stock, $status, $image, $f
   
 }
 
-// 変更箇所
+// 商品を登録する
 function insert_item($db, $name, $price, $stock, $filename, $status){
   $status_value = PERMITTED_ITEM_STATUSES[$status];
   $sql = "
@@ -91,7 +98,7 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
   return execute_query($db, $sql, $params);
 }
 
-// 変更箇所
+// 商品の公開・非公開状態の更新
 function update_item_status($db, $item_id, $status){
   $sql = "
     UPDATE
@@ -106,7 +113,7 @@ function update_item_status($db, $item_id, $status){
   return execute_query($db, $sql, $params);
 }
 
-// 変更箇所
+// 商品の在庫の数の更新
 function update_item_stock($db, $item_id, $stock){
   $sql = "
     UPDATE
@@ -121,6 +128,7 @@ function update_item_stock($db, $item_id, $stock){
   return execute_query($db, $sql, $params);
 }
 
+// 商品を削除するかどうかの判定を行う。ただし、トランザクションを用いて、商品を削除するのを不適切な処理で実行しようとした場合にはrollbackするようにしてある。
 function destroy_item($db, $item_id){
   $item = get_item($db, $item_id);
   // dd($item);
@@ -137,6 +145,7 @@ function destroy_item($db, $item_id){
   return false;
 }
 
+// 商品を削除する
 function delete_item($db, $item_id){
   $sql = "
     DELETE FROM
@@ -151,11 +160,12 @@ function delete_item($db, $item_id){
 
 
 // 非DB
-
+// 商品を公開状態にする
 function is_open($item){
   return $item['status'] === 1;
 }
 
+// 商品の名前、価格、在庫、ファイルの名前、公開状態が適切になっているかの確認を行う。
 function validate_item($name, $price, $stock, $filename, $status){
   $is_valid_item_name = is_valid_item_name($name);
   $is_valid_item_price = is_valid_item_price($price);
@@ -170,6 +180,7 @@ function validate_item($name, $price, $stock, $filename, $status){
     && $is_valid_item_status;
 }
 
+// 商品の名前が既定のルールで入力されているかの確認
 function is_valid_item_name($name){
   $is_valid = true;
   if(is_valid_length($name, ITEM_NAME_LENGTH_MIN, ITEM_NAME_LENGTH_MAX) === false){
@@ -179,6 +190,7 @@ function is_valid_item_name($name){
   return $is_valid;
 }
 
+// 商品の価格が適切に入力されているかの確認
 function is_valid_item_price($price){
   $is_valid = true;
   if(is_positive_integer($price) === false){
@@ -188,6 +200,7 @@ function is_valid_item_price($price){
   return $is_valid;
 }
 
+// 商品の在庫の数が適切に入力されているかの確認
 function is_valid_item_stock($stock){
   $is_valid = true;
   if(is_positive_integer($stock) === false){
@@ -197,6 +210,7 @@ function is_valid_item_stock($stock){
   return $is_valid;
 }
 
+// 商品の画像名が適切かどうかの確認
 function is_valid_item_filename($filename){
   $is_valid = true;
   if($filename === ''){
@@ -205,6 +219,7 @@ function is_valid_item_filename($filename){
   return $is_valid;
 }
 
+// 商品の公開状態が公開か非公開かの判定
 function is_valid_item_status($status){
   $is_valid = true;
   if(isset(PERMITTED_ITEM_STATUSES[$status]) === false){
