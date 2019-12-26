@@ -84,3 +84,6 @@ define('PERMITTED_IMAGE_TYPES', array(
 
 // フレーム内の全てのページの読み込みを禁止する
 define('FRAME_OPTION', 'X-Frame-Options: DENY');
+
+// 購入履歴でページに表示する最大数
+define('PAGE_VIEW_MAX', 8);

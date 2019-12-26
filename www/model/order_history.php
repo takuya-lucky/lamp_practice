@@ -1,5 +1,7 @@
 <?php
+// エラーがなければ、functions.phpを読み込む
 require_once 'functions.php';
+// エラーがなければ、db.phpを読み込む
 require_once 'db.php';
 
 // 購入履歴の作成
@@ -13,8 +15,9 @@ function make_purchase_history($db, $user) {
   return execute_query($db, $sql, $params); 
 }
 
-// 購入履歴・詳細を作るためのレコードを取り出す。管理者ユーザーの場合は全ての履歴の閲覧が可能。他のユーザーは自身の履歴のみ閲覧可能。
-function get_purchase_histories($db, $user) {
+// 購入履歴・詳細を作るためのレコードを取り出す。管理者ユーザーの場合は全ての履歴の閲覧が可能。他のユーザーは自身の履歴のみ閲覧可能。履歴は8回分の注文ずつ表示する。
+function get_purchase_histories($db, $user,$now) {
+  $front_select = ($now - 1) * PAGE_VIEW_MAX;
     $sql = "
     SELECT
       order_details.history_id,
@@ -44,6 +47,30 @@ function get_purchase_histories($db, $user) {
      order_details.history_id
     ORDER BY
       created DESC
+    LIMIT
+      :start_select, :MAX
     ";
+    $params[':start_select'] = $front_select;
+    $params[':MAX'] = PAGE_VIEW_MAX;
+    // dd($params);
     return fetch_all_query($db, $sql, $params);
   }
+
+// 購入履歴の数の取得
+  function get_count_histories($db, $user) {
+      $sql = "
+      SELECT
+        count(*) as histories_total
+      FROM 
+        order_histories
+      ";
+      if(is_admin($user) === false){
+        $sql .="
+        WHERE
+          order_histories.user_id = :user_id
+        ";
+        $params['user_id'] = $user['user_id'];
+      }
+      $result = fetch_query($db, $sql, $params);
+      return $result['histories_total'];
+    }

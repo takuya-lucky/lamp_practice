@@ -181,3 +181,26 @@ function validate_csrf_token() {
     redirect_to(LOGIN_URL);
   } 
 }
+
+// ページ数の取得
+function get_now_page() {
+  if(get_get('page') === '') {
+    return 1;
+  }
+  return get_get('page');
+}
+
+// 現在のページの最初の番号を出す
+function get_front_select($num_histories) {
+  $now = get_now_page();
+  return ($now - 1) * PAGE_VIEW_MAX + 1;
+}
+
+// 現在のページの最後の番号を出す
+function get_behind_select($num_histories) {
+  $behind_select = get_front_select($num_histories) + PAGE_VIEW_MAX - 1;
+  if ($behind_select > $num_histories) {
+    return $num_histories;
+  } 
+  return $behind_select;
+}
