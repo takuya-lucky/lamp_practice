@@ -40,7 +40,7 @@ if ($now > $page_max) {
 }
 
 // 現在のページの表示の最初を出力
-$front_select = get_front_select($num_items);
+$front_select = get_front_select();
 
 // 現在のページの表示の最後を出力
 $behind_select = get_behind_select($num_items);

@@ -191,16 +191,16 @@ function get_now_page() {
 }
 
 // 現在のページの最初の番号を出す
-function get_front_select($num_histories) {
+function get_front_select() {
   $now = get_now_page();
   return ($now - 1) * PAGE_VIEW_MAX + 1;
 }
 
 // 現在のページの最後の番号を出す
-function get_behind_select($num_histories) {
-  $behind_select = get_front_select($num_histories) + PAGE_VIEW_MAX - 1;
-  if ($behind_select > $num_histories) {
-    return $num_histories;
+function get_behind_select($page_number) {
+  $behind_select = get_front_select($page_number) + PAGE_VIEW_MAX - 1;
+  if ($behind_select > $page_number) {
+    return $page_number;
   } 
   return $behind_select;
 }

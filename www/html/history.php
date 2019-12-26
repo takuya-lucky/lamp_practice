@@ -41,7 +41,7 @@ if ($now > $page_max) {
   redirect_to(HISTORY_URL);
 }
 // 現在のページの表示の最初を出力
-$front_select = get_front_select($num_histories);
+$front_select = get_front_select();
 
 // 現在のページの表示の最後を出力
 $behind_select = get_behind_select($num_histories);
