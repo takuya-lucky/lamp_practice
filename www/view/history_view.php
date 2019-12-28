@@ -39,7 +39,7 @@
         <?php } ?>
         </tbody>
       </table>
-      <?php echo  $num_histories . '件中' . '&nbsp;' . $front_select . '-' . $behind_select . '軒'; ?>
+      <?php echo  $num_histories . '件中' . ' ' . $front_select . '-' . $behind_select . '件'; ?>
       <?php if ($now > 1) { ?>
         <a href="history.php?page=<?php echo $now - 1 ?>">前へ</a>
       <?php } else { ?>

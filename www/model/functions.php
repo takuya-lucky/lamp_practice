@@ -187,6 +187,10 @@ function get_now_page() {
   if(get_get('page') === '') {
     return 1;
   }
+  if(is_positive_integer(get_get('page')) === false) {
+    set_error('不正なアクセスです。');
+    redirect_to(HOME_URL);
+  }
   return get_get('page');
 }
 

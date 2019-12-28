@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  <?php echo  $num_items . '件中' . '&nbsp;' . $front_select . '-' . $behind_select . '軒'; ?>
+  <?php echo  $num_items . '件中' . ' ' . $front_select . '-' . $behind_select . '件'; ?>
   <?php if ($now > 1) { ?>
     <a href="?page=<?php echo $now - 1 ?>">前へ</a>
   <?php } else { ?>
