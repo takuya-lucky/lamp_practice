@@ -27,6 +27,9 @@ function get_item($db, $item_id){
 
 // 全ての商品の取得(is_openがfalse、trueによって取得商品が変わる)
 function get_items($db, $is_open = false){
+  // 現在のページ数の取得
+  $now = get_now_page();
+  $start_select = ($now - 1) * 8;
   $sql = '
     SELECT
       item_id, 
@@ -34,19 +37,25 @@ function get_items($db, $is_open = false){
       stock,
       price,
       image,
-      status
+      status,
+      created
     FROM
       items
   ';
   if($is_open === true){
     $sql .= '
       WHERE status = :status
+      ORDER BY
+        created desc
+      LIMIT
+        :start_select, :MAX
     ';
-    $params = array(':status' => '1');
-  }
-
+    $params = array(':status' => '1', ':start_select' => $start_select, 'MAX' => PAGE_VIEW_MAX);
+  } 
   return fetch_all_query($db, $sql, $params);
 }
+
+
 
 // get_itemsを実行する($is_open = false)
 function get_all_items($db){
@@ -226,4 +235,19 @@ function is_valid_item_status($status){
     $is_valid = false;
   }
   return $is_valid;
+}
+
+// 全ての商品の取得
+function get_count_items($db){
+  $sql = '
+    SELECT
+      count(*) as total
+    FROM
+      items
+    WHERE 
+      status = :status
+  ';
+  $params = array(':status' => '1');
+  $count_item = fetch_query($db, $sql, $params);
+  return $count_item['total'];
 }

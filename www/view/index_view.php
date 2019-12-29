@@ -14,7 +14,7 @@
   <div class="container">
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
-
+  
     <div class="card-deck">
       <div class="row">
       <?php foreach($items as $item){ ?>
@@ -44,6 +44,19 @@
       </div>
     </div>
   </div>
-  
+  <?php echo  $num_items . '件中' . ' ' . $front_select . '-' . $behind_select . '件'; ?>
+  <?php if ($now > 1) { ?>
+    <a href="?page=<?php echo $now - 1 ?>">前へ</a>
+  <?php } else { ?>
+    <?php echo '前へ'; } ?>
+  <?php for ($i=1; $i <= $page_max; $i++) { ?>
+  <?php if ($i == $now) { ?>
+  <?php echo $now; }else{ ?>
+    <a href="?page=<?php echo $i ?>"><?php echo $i ; }?> </a>
+  <?php } ?>
+  <?php if ($now < $page_max) { ?>
+    <a href="?page=<?php echo $now + 1 ?>">次へ</a>
+  <?php } else { ?>
+  <?php echo '次へ'; } ?>
 </body>
 </html>
