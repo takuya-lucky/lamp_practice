@@ -12,11 +12,11 @@ function redirect_to($url){
 }
 
 // $_getに中身が入っているかの確認を行う。返り値・戻り値は送信したデータか空。
-function get_get($name){
+function get_get($name, $default = ''){
   if(isset($_GET[$name]) === true){
     return $_GET[$name];
   };
-  return '';
+  return $default;
 }
 
 // $_postに中身が入っているかの確認を行う。返り値・戻り値は送信したデータか空。

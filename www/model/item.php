@@ -55,8 +55,6 @@ function get_items($db, $is_open = false){
   return fetch_all_query($db, $sql, $params);
 }
 
-
-
 // get_itemsを実行する($is_open = false)
 function get_all_items($db){
   return get_items($db);
@@ -250,4 +248,72 @@ function get_count_items($db){
   $params = array(':status' => '1');
   $count_item = fetch_query($db, $sql, $params);
   return $count_item['total'];
+}
+
+// 商品の並び替え
+function sort_items($db, $is_open = true, $change_position = 'new_item') {
+ // 現在のページ数の取得
+ $now = get_now_page();
+ $start_select = ($now - 1) * PAGE_VIEW_MAX;
+ $params = array();
+ $sql = '
+   SELECT
+     item_id, 
+     name,
+     stock,
+     price,
+     image,
+     status,
+     created
+   FROM
+     items
+ ';
+  if ($is_open === true) {
+    $sql .='
+    WHERE
+      status = :status
+    ';
+    $params['status'] = '1';
+  }
+  $orders = array(
+    'new_item' => 'ORDER BY created DESC',
+    'cheap_item' => 'ORDER BY price ASC',
+    'expensive_item' => 'ORDER BY price DESC'
+  );
+  if (isset($orders[$change_position]) === false) {
+    set_error('不正なアクセスです');
+    redirect_to(HOME_URL);
+  }
+  $sql .= $orders[$change_position];
+  $sql .='
+  LIMIT
+    :start_select, :MAX
+  ';
+  $params[':start_select'] = $start_select;
+  $params[':MAX'] = PAGE_VIEW_MAX;
+  return fetch_all_query($db, $sql, $params);
+}
+
+// 商品の売り上げ数の上位三つの取得
+function sale_ranking($db) {
+  $sql = '
+  SELECT
+    order_details.item_id,
+    sum(amount) as sale_total_amount,
+    items.name,
+    items.image
+  FROM
+    order_details
+  JOIN
+    items
+  ON
+    order_details.item_id = items.item_id
+  GROUP BY
+    item_id
+  ORDER BY
+    sale_total_amount desc
+  LIMIT
+    3
+  ';
+  return fetch_all_query($db, $sql);
 }

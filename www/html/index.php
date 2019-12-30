@@ -22,10 +22,14 @@ $db = get_db_connect();
 $user = get_login_user($db);
 
 // 公開商品の読み込み
-$items = get_open_items($db);
+// $items = get_open_items($db);
 
 // 現在のページ数の取得
 $now = get_now_page();
+
+$change_position = get_get('change_position','new_item');
+$items = sort_items($db,true,$change_position);
+
 
 // 商品の取得
 $num_items = get_count_items($db);
@@ -38,6 +42,9 @@ if ($now > $page_max) {
   set_error('不正なアクセスです');
   redirect_to(HOME_URL);
 }
+
+// 商品の売り上げランキングの実装
+$sale_ranking = sale_ranking($db);
 
 // 現在のページの表示の最初を出力
 $front_select = get_front_select();
