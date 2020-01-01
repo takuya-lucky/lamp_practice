@@ -21,13 +21,12 @@ $db = get_db_connect();
 // ユーザー情報をデータベースに接続して、$userに代入する
 $user = get_login_user($db);
 
-// 公開商品の読み込み
-// $items = get_open_items($db);
-
 // 現在のページ数の取得
 $now = get_now_page();
 
+// 並び替えの要素を代入する
 $change_position = get_get('change_position','new_item');
+// 並び替えによる商品一覧の取得
 $items = sort_items($db,true,$change_position);
 
 

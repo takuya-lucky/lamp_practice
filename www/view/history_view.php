@@ -41,26 +41,26 @@
       </table>
     <?php echo  h($num_histories . '件中' . ' ' . $front_select . '-' . $behind_select . '件'); ?>
 
-      <?php if ($now > 1) { ?>
-        <a href="history.php?page=<?php echo h($now - 1) ?>">前へ</a>
-      <?php } else { ?>
-        前へ
-      <?php } ?>
+    <?php if ($now > 1) { ?>
+      <a href="history.php?page=<?php echo h($now - 1) ?>">前へ</a>
+    <?php } else { ?>
+      前へ
+    <?php } ?>
 
-      <?php for ($i=1; $i <= $page_max; $i++) { ?>
-        <?php if ($i == $now) { ?>
-          <?php echo h($now);?> 
-        <?php } else { ?>
-          <a href="?page=<?php echo h($i) ?>"><?php echo h($i) ;?></a>
-        <?php } ?>
-      <?php } ?>
-
-      <?php if ($now < $page_max) { ?>
-        <a href="history.php?page=<?php echo h($now + 1) ?>">次へ</a>
+    <?php for ($i=1; $i <= $page_max; $i++) { ?>
+      <?php if ($i == $now) { ?>
+        <?php echo h($now);?> 
       <?php } else { ?>
-        次へ
+        <a href="?page=<?php echo h($i) ?>"><?php echo h($i) ;?></a>
       <?php } ?>
-      
+    <?php } ?>
+
+    <?php if ($now < $page_max) { ?>
+      <a href="history.php?page=<?php echo h($now + 1) ?>">次へ</a>
+    <?php } else { ?>
+      次へ
+    <?php } ?>
+
   </div>
 </body>
 </html>
