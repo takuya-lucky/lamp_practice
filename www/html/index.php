@@ -29,7 +29,6 @@ $change_position = get_get('change_position','new_item');
 // 並び替えによる商品一覧の取得
 $items = sort_items($db,true,$change_position);
 
-
 // 商品の取得
 $num_items = get_count_items($db);
 

@@ -50,7 +50,7 @@ function make_purchase_detail($db, $history_id, $carts) {
 
   // 商品の購入金額の計算を行い、その結果を返り値・戻り値とする
   function sum_purchased($detail){
-    $total_price = 0;
+    $total_price = DEFAULT_PRICE;
     foreach($detail as $details){
       $total_price += $details['purchased_price'] * $details['amount'];
     }

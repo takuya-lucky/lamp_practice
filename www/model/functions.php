@@ -65,7 +65,7 @@ function get_errors(){
 
 // $_SESSIONにエラーが入っているかの確認を行う。返り値・戻り値はtureまたはfalse
 function has_error(){
-  return isset($_SESSION['__errors']) && count($_SESSION['__errors']) !== 0;
+  return isset($_SESSION['__errors']) && count($_SESSION['__errors']) !== COUNT_CHECK_NUMBER;
 }
 
 // $_SESSIONに$messageを代入する。返り値は$_SESSION['_message']
@@ -99,8 +99,8 @@ function get_upload_filename($file){
 }
 
 // hashでuniqidで生成した13文字の値を不可逆性の値に変換をして、base_convartで中身の基数を16進数から36進数に変換をして、substrで0番目（一番最初）から20番目（$lengthで指定）を取り出す
-function get_random_string($length = 20){
-  return substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, $length);
+function get_random_string($length = TOKEN_LENGTH){
+  return substr(base_convert(hash('sha256', uniqid()), BASE_16, BASE_32), GET_TOKEN_START_NUMBER, $length);
 }
 
 // アップロードした画像の保存先の指定
