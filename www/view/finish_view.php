@@ -13,7 +13,7 @@
   <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
-    <?php if(count($carts) > DEFAULT_CART_AMOUNT){ ?>
+    <?php if(count($carts) > 0){ ?>
       <table class="table table-bordered">
         <thead class="thead-light">
           <tr>

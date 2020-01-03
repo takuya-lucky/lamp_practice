@@ -91,32 +91,8 @@ define('PAGE_VIEW_MAX', 8);
 // cookieを削除するために利用する値
 define('DELETE_COOKIE_TIME', 42000);
 
-// 合計金額の初期値
-define('DEFAULT_PRICE', 0);
-
-// カートの中身の商品の有無
-define('DEFAULT_CART_AMOUNT', 0);
-
-// 在庫数の有無
-define('CHECK_ITEM_STOCK', 0);
-
-// カートの商品の追加
-define('ADD_CART_ITEM', 1);
-
-// count関数の判定の際に利用する数字
-define('COUNT_CHECK_NUMBER', 0);
-
 // トークンの長さ
 define('TOKEN_LENGTH', 20);
 
-// トークンの取得を何文字目から行うかの数字
-define('GET_TOKEN_START_NUMBER', 0);
-
-// 16進数
-define('BASE_16', 16);
-
-// 32進数
-define('BASE_32', 32);
-
-// 商品の表示をページ数-1番目から行うための定数
-define('SELECT_START_PAGE_NUMBER', 1);
+// 進数表記(この定数にそれぞれの進数にあたる数字を乗法する)
+define('HASH_BASE_NUM', 1);

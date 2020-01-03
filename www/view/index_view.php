@@ -34,7 +34,7 @@
               <img class="card-img" src="<?php print h(IMAGE_PATH . $item['image']); ?>">
               <figcaption>
                 <?php print h(number_format($item['price'])); ?>円
-                <?php if($item['stock'] > CHECK_ITEM_STOCK){ ?>
+                <?php if($item['stock'] > 0){ ?>
                   <form action="index_add_cart.php" method="post">
                     <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
                     <input type="hidden" name="item_id" value="<?php print h($item['item_id']); ?>">
@@ -68,8 +68,8 @@
   </div>
   <?php echo  h($num_items . '件中' . ' ' . $front_select . '-' . $behind_select . '件'); ?>
 
-  <?php if ($now > SELECT_START_PAGE_NUMBER) { ?>
-    <a href="?page=<?php echo h($now - SELECT_START_PAGE_NUMBER) ?>&change_position=<?php echo h($change_position)?>">前へ</a>
+  <?php if ($now > 1) { ?>
+    <a href="?page=<?php echo h($now - 1) ?>&change_position=<?php echo h($change_position)?>">前へ</a>
   <?php } else { ?>
     前へ
   <?php } ?>
@@ -83,7 +83,7 @@
   <?php } ?>
 
   <?php if ($now < $page_max) { ?>
-    <a href="?page=<?php echo h($now + SELECT_START_PAGE_NUMBER) ?>&change_position=<?php echo h($change_position)?>">次へ</a>
+    <a href="?page=<?php echo h($now + 1) ?>&change_position=<?php echo h($change_position)?>">次へ</a>
   <?php } else { ?>
     次へ
   <?php } ?>

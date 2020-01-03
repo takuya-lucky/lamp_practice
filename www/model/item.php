@@ -29,7 +29,7 @@ function get_item($db, $item_id){
 function get_items($db, $is_open = false){
   // 現在のページ数の取得
   $now = get_now_page();
-  $start_select = ($now - SELECT_START_PAGE_NUMBER) * PAGE_VIEW_MAX;
+  $start_select = ($now - 1) * PAGE_VIEW_MAX;
   $sql = '
     SELECT
       item_id, 
@@ -254,7 +254,7 @@ function get_count_items($db){
 function sort_items($db, $is_open = true, $change_position = 'new_item') {
  // 現在のページ数の取得
  $now = get_now_page();
- $start_select = ($now - SELECT_START_PAGE_NUMBER) * PAGE_VIEW_MAX;
+ $start_select = ($now - 1) * PAGE_VIEW_MAX;
  $params = array();
  $sql = '
    SELECT

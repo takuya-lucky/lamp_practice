@@ -64,11 +64,11 @@ function add_cart($db, $item_id, $user_id) {
   if($cart === false){
     return insert_cart($db, $user_id, $item_id);
   }
-  return update_cart_amount($db, $cart['cart_id'], $cart['amount'] + ADD_CART_ITEM);
+  return update_cart_amount($db, $cart['cart_id'], $cart['amount'] + 1);
 }
 
 // insert文で、新たにカートに商品を1つ追加する。(注文数1)。返り値・戻り値は商品の追加。
-function insert_cart($db, $item_id, $user_id, $amount = ADD_CART_ITEM){
+function insert_cart($db, $item_id, $user_id, $amount = 1){
   $sql = "
     INSERT INTO
       carts(
@@ -143,7 +143,7 @@ function delete_user_carts($db, $user_id){
 
 // 会計金額の計算を行っている。返り値・戻り値は値段×購入数
 function sum_carts($carts){
-  $total_price = DEFAULT_PRICE;
+  $total_price = 0;
   foreach($carts as $cart){
     $total_price += $cart['price'] * $cart['amount'];
   }
@@ -152,7 +152,7 @@ function sum_carts($carts){
 
 // 商品が購入できるかの確認の処理を行っている。カートの中に商品があるかどうか、公開商品かどうか、注文数が在庫数を超えていないかどうかを確認し、全て条件を満たせばtrue、1つでも満たせなければ、falseが返り値・戻り値となる。
 function validate_cart_purchase($carts){
-  if(count($carts) === DEFAULT_CART_AMOUNT){
+  if(count($carts) === 0){
     set_error('カートに商品が入っていません。');
     return false;
   }
@@ -160,7 +160,7 @@ function validate_cart_purchase($carts){
     if(is_open($cart) === false){
       set_error($cart['name'] . 'は現在購入できません。');
     }
-    if($cart['stock'] - $cart['amount'] < CHECK_ITEM_STOCK){
+    if($cart['stock'] - $cart['amount'] < 0){
       set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart['stock']);
     }
   }
