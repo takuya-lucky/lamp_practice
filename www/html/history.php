@@ -45,7 +45,7 @@ if ($now > $page_max) {
 $current_page_start_num = get_current_page_start_num();
 
 // 現在のページの表示の最後を出力
-$current_page_behind_num = get_current_page_behind_num($num_purchase_histories);
+$current_page_end_num = get_current_page_behind_num($num_purchase_histories);
 
 // エラーがあっても、view.phpを読み込む
 include_once '../view/history_view.php';

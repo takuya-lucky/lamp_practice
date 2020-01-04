@@ -66,7 +66,7 @@
       </div>
     </div>
   </div>
-  <?php echo  h($num_items . '件中' . ' ' . $current_page_start_num . '-' . $current_page_behind_num . '件'); ?>
+  <?php echo  h($num_items . '件中' . ' ' . $current_page_start_num . '-' . $current_page_end_num . '件'); ?>
 
   <?php if ($now > 1) { ?>
     <a href="?page=<?php echo h($now - 1) ?>&sort_item=<?php echo h($sort_item)?>">前へ</a>

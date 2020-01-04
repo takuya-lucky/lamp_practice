@@ -17,7 +17,7 @@ function insert_purchase_history($db, $user) {
 
 // 購入履歴・詳細を作るためのレコードを取り出す。管理者ユーザーの場合は全ての履歴の閲覧が可能。他のユーザーは自身の履歴のみ閲覧可能。履歴は8回分の注文ずつ表示する。
 function get_purchase_histories($db, $user,$now) {
-  $front_select = ($now - 1) * PAGE_VIEW_MAX;
+  $start_select = ($now - 1) * PAGE_VIEW_MAX;
     $sql = "
     SELECT
       order_details.history_id,
@@ -50,7 +50,7 @@ function get_purchase_histories($db, $user,$now) {
     LIMIT
       :start_select, :MAX
     ";
-    $params[':start_select'] = $front_select;
+    $params[':start_select'] = $start_select;
     $params[':MAX'] = PAGE_VIEW_MAX;
     // dd($params);
     return fetch_all_query($db, $sql, $params);

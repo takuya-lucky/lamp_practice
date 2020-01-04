@@ -49,7 +49,7 @@ $sale_ranking = sale_ranking($db);
 $current_page_start_num = get_current_page_start_num();
 
 // 現在のページの表示の最後を出力
-$current_page_behind_num = get_current_page_behind_num($num_items);
+$current_page_end_num = get_current_page_behind_num($num_items);
 
 // トークンの生成とセット
 $token = get_csrf_token();

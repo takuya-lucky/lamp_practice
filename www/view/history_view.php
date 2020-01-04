@@ -39,7 +39,7 @@
         <?php } ?>
         </tbody>
       </table>
-    <?php echo  h($num_purchase_histories . '件中' . ' ' . $current_page_start_num . '-' . $current_page_behind_num . '件'); ?>
+    <?php echo  h($num_purchase_histories . '件中' . ' ' . $current_page_start_num . '-' . $current_page_end_num . '件'); ?>
 
     <?php if ($now > 1) { ?>
       <a href="history.php?page=<?php echo h($now - 1) ?>">前へ</a>
