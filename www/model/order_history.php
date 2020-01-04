@@ -52,7 +52,6 @@ function get_purchase_histories($db, $user,$now) {
     ";
     $params[':start_select'] = $start_select;
     $params[':MAX'] = PAGE_VIEW_MAX;
-    // dd($params);
     return fetch_all_query($db, $sql, $params);
   }
 

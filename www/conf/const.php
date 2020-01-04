@@ -97,8 +97,11 @@ define('TOKEN_LENGTH', 20);
 // hashの種類
 define('HASH_ALGORITHM', 'sha256');
 
-// 進数表記(この定数にそれぞれの進数にあたる数字を乗法する)
+// 進数表記(sha256を利用する為)
 define('HASH_BASE_NUM', 16);
 
-//
+// 進数表記(全ての英数字を利用する為)
 define('ALPHANUMERIC_BASE_NUM', 36);
+
+// トークンに利用する文字数
+define('USE_TOKEN_LENGTH', 48);

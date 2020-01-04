@@ -158,9 +158,9 @@ function h ($string) {
   return htmlspecialchars($string, ENT_QUOTES, 'utf-8');
 }
 
-//トークンを作る処理。get_random_stringから48の文字・数字の不可逆性の値を取得して、セッションに保存する
+//トークンを作る処理。get_random_stringから文字・数字の不可逆性の値を取得して、セッションに保存する
 function get_csrf_token() {
-  $token = get_random_string(48);
+  $token = get_random_string(USE_TOKEN_LENGTH);
   set_session('csrf_token', $token);
   return $token;
 }
@@ -201,10 +201,10 @@ function get_current_page_start_num() {
 }
 
 // 現在のページの最後の番号を出す
-function get_current_page_behind_num($page_number) {
-  $behind_select = get_current_page_start_num($page_number) + PAGE_VIEW_MAX - 1;
-  if ($behind_select > $page_number) {
+function get_current_page_end_num($page_number) {
+  $end_select = get_current_page_start_num($page_number) + PAGE_VIEW_MAX - 1;
+  if ($end_select > $page_number) {
     return $page_number;
   } 
-  return $behind_select;
+  return $end_select;
 }

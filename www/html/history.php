@@ -29,10 +29,10 @@ $user = get_login_user($db);
 $now = get_now_page();
 
 // 購入履歴の読み込み
-$purchase_histories = get_purchase_histories($db, $user,$now);
+$purchase_histories = get_purchase_histories($db, $user, $now);
 
 // 購入履歴数の取得
-$num_purchase_histories = get_count_histories($db,$user);
+$num_purchase_histories = get_count_histories($db, $user);
 
 // 全てのデータを表示するのに必要なページ数(注文履歴数数/ページに表示できる注文履歴)
 $page_max = ceil($num_purchase_histories / PAGE_VIEW_MAX);
@@ -45,7 +45,7 @@ if ($now > $page_max) {
 $current_page_start_num = get_current_page_start_num();
 
 // 現在のページの表示の最後を出力
-$current_page_end_num = get_current_page_behind_num($num_purchase_histories);
+$current_page_end_num = get_current_page_end_num($num_purchase_histories);
 
 // エラーがあっても、view.phpを読み込む
 include_once '../view/history_view.php';

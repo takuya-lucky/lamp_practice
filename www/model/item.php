@@ -236,7 +236,7 @@ function is_valid_item_status($status){
 }
 
 // 全ての商品の取得
-function get_count_items($db){
+function get_count_open_items($db){
   $sql = '
     SELECT
       count(*) as total

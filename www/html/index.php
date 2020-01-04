@@ -30,8 +30,8 @@ $sort_item = get_get('sort_item','new_item');
 // 並び替えによる商品一覧の取得
 $items = sort_items($db,true,$sort_item);
 
-// 商品の取得
-$num_items = get_count_items($db);
+// 全公開商品の取得
+$num_items = get_count_open_items($db);
 
 // 全てのデータを表示するのに必要なページ数(商品数/ページに表示できる商品数)
 $page_max = ceil($num_items / PAGE_VIEW_MAX);
@@ -49,7 +49,7 @@ $sale_ranking = sale_ranking($db);
 $current_page_start_num = get_current_page_start_num();
 
 // 現在のページの表示の最後を出力
-$current_page_end_num = get_current_page_behind_num($num_items);
+$current_page_end_num = get_current_page_end_num($num_items);
 
 // トークンの生成とセット
 $token = get_csrf_token();
