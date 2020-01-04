@@ -4,8 +4,8 @@ require_once 'functions.php';
 // エラーがなければ、db.phpを読み込む
 require_once 'db.php';
 
-// 購入履歴の作成
-function make_purchase_history($db, $user) {
+// 購入履歴の記録
+function insert_purchase_history($db, $user) {
   $sql = "
   INSERT INTO
     order_histories(user_id)

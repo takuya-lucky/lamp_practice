@@ -251,7 +251,7 @@ function get_count_items($db){
 }
 
 // 商品の並び替え
-function sort_items($db, $is_open = true, $change_position = 'new_item') {
+function sort_items($db, $is_open = true, $sort_item = 'new_item') {
  // 現在のページ数の取得
  $now = get_now_page();
  $start_select = ($now - 1) * PAGE_VIEW_MAX;
@@ -280,11 +280,11 @@ function sort_items($db, $is_open = true, $change_position = 'new_item') {
     'cheap_item' => 'ORDER BY price ASC',
     'expensive_item' => 'ORDER BY price DESC'
   );
-  if (isset($orders[$change_position]) === false) {
+  if (isset($orders[$sort_item]) === false) {
     set_error('不正なアクセスです');
     redirect_to(HOME_URL);
   }
-  $sql .= $orders[$change_position];
+  $sql .= $orders[$sort_item];
   $sql .='
   LIMIT
     :start_select, :MAX

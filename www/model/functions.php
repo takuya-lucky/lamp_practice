@@ -100,7 +100,7 @@ function get_upload_filename($file){
 
 // hashでuniqidで生成した13文字の値を不可逆性の値に変換をして、base_convartで中身の基数を16進数から36進数に変換をして、substrで0番目（一番最初）から20番目（$lengthで指定）を取り出す
 function get_random_string($length = TOKEN_LENGTH){
-  return substr(base_convert(hash('sha256', uniqid()), HASH_BASE_NUM * 16, HASH_BASE_NUM * 36), 0, $length);
+  return substr(base_convert(hash(HASH_ALGORITHM, uniqid()), HASH_BASE_NUM, ALPHANUMERIC_BASE_NUM), 0, $length);
 }
 
 // アップロードした画像の保存先の指定
@@ -195,14 +195,14 @@ function get_now_page() {
 }
 
 // 現在のページの最初の番号を出す
-function get_front_select() {
+function get_current_page_start_num() {
   $now = get_now_page();
   return ($now - 1) * PAGE_VIEW_MAX + 1;
 }
 
 // 現在のページの最後の番号を出す
-function get_behind_select($page_number) {
-  $behind_select = get_front_select($page_number) + PAGE_VIEW_MAX - 1;
+function get_current_page_behind_num($page_number) {
+  $behind_select = get_current_page_start_num($page_number) + PAGE_VIEW_MAX - 1;
   if ($behind_select > $page_number) {
     return $page_number;
   } 

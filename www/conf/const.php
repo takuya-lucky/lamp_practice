@@ -94,5 +94,11 @@ define('DELETE_COOKIE_TIME', 42000);
 // トークンの長さ
 define('TOKEN_LENGTH', 20);
 
+// hashの種類
+define('HASH_ALGORITHM', 'sha256');
+
 // 進数表記(この定数にそれぞれの進数にあたる数字を乗法する)
-define('HASH_BASE_NUM', 1);
+define('HASH_BASE_NUM', 16);
+
+//
+define('ALPHANUMERIC_BASE_NUM', 36);

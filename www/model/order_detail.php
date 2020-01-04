@@ -2,8 +2,8 @@
 require_once 'functions.php';
 require_once 'db.php';
 
-// 購入明細の作成
-function make_purchase_detail($db, $history_id, $carts) {
+// 購入明細の記録
+function insert_purchase_detail($db, $history_id, $carts) {
     $make_detail = true;
     foreach($carts as $cart) {
       $sql = "

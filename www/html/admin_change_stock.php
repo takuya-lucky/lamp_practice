@@ -30,7 +30,6 @@ if(is_admin($user) === false){
 // post送信が行われる前にセッショントークンによる適正ユーザーの判定
 validate_csrf_token();
 
-
 // post送信で送信されたitem_idの値を変数$item_idにを代入する
 $item_id = get_post('item_id');
 // post送信で送信されたstockの値を変数$stockに代入する

@@ -32,6 +32,7 @@ validate_csrf_token();
 
 // post送信でitem_idが送られてきていれば、変数$item_idに代入する
 $item_id = get_post('item_id');
+
 // post送信でchanges_toが送られてきていれば、変数$changes_toに代入する
 $changes_to = get_post('changes_to');
 

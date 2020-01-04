@@ -1,4 +1,4 @@
-var change_position = document.getElementById('change_position');
-change_position.addEventListener('change', function() {
+var sort_item = document.getElementById('sort_item');
+sort_item.addEventListener('change', function() {
     document.items_order.submit();
 });

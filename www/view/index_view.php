@@ -16,10 +16,10 @@
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     並べ替え
     <form action="index.php" method="get" name="items_order">
-      <select name="change_position" id="change_position">
-        <option value="new_item" <?php if ($change_position === 'new_item') { print h('selected');}?>>新着順</option>
-        <option value="cheap_item" <?php if ($change_position === 'cheap_item') { print h('selected');}?>>価格の安い順</option>
-        <option value="expensive_item"<?php if ($change_position === 'expensive_item') { print h('selected');}?>>価格の高い順</option>
+      <select name="sort_item" id="sort_item">
+        <option value="new_item" <?php if ($sort_item === 'new_item') { print h('selected');}?>>新着順</option>
+        <option value="cheap_item" <?php if ($sort_item === 'cheap_item') { print h('selected');}?>>価格の安い順</option>
+        <option value="expensive_item"<?php if ($sort_item === 'expensive_item') { print h('selected');}?>>価格の高い順</option>
       </select>
     </form>
     <div class="card-deck">
@@ -66,10 +66,10 @@
       </div>
     </div>
   </div>
-  <?php echo  h($num_items . '件中' . ' ' . $front_select . '-' . $behind_select . '件'); ?>
+  <?php echo  h($num_items . '件中' . ' ' . $current_page_start_num . '-' . $current_page_behind_num . '件'); ?>
 
   <?php if ($now > 1) { ?>
-    <a href="?page=<?php echo h($now - 1) ?>&change_position=<?php echo h($change_position)?>">前へ</a>
+    <a href="?page=<?php echo h($now - 1) ?>&sort_item=<?php echo h($sort_item)?>">前へ</a>
   <?php } else { ?>
     前へ
   <?php } ?>
@@ -78,12 +78,12 @@
     <?php if ($i == $now) { ?>
       <?php echo h($now); ?>
     <?php } else { ?>
-      <a href="?page=<?php echo h($i) ?>&change_position=<?php echo h($change_position)?>"><?php echo h($i) ; ?> </a>
+      <a href="?page=<?php echo h($i) ?>&sort_item=<?php echo h($sort_item)?>"><?php echo h($i) ; ?> </a>
     <?php } ?>
   <?php } ?>
 
   <?php if ($now < $page_max) { ?>
-    <a href="?page=<?php echo h($now + 1) ?>&change_position=<?php echo h($change_position)?>">次へ</a>
+    <a href="?page=<?php echo h($now + 1) ?>&sort_item=<?php echo h($sort_item)?>">次へ</a>
   <?php } else { ?>
     次へ
   <?php } ?>

@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-        <?php foreach($histories as $value) { ?>
+        <?php foreach($purchase_histories as $value) { ?>
             <tr>
                 <td><?php print h($value['history_id']); ?></td>
                 <td><?php print h($value['created']); ?></td>
@@ -39,7 +39,7 @@
         <?php } ?>
         </tbody>
       </table>
-    <?php echo  h($num_histories . '件中' . ' ' . $front_select . '-' . $behind_select . '件'); ?>
+    <?php echo  h($num_purchase_histories . '件中' . ' ' . $current_page_start_num . '-' . $current_page_behind_num . '件'); ?>
 
     <?php if ($now > 1) { ?>
       <a href="history.php?page=<?php echo h($now - 1) ?>">前へ</a>
