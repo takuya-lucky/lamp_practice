@@ -22,11 +22,13 @@ if(is_logined() === false){
 
 // データベースへの接続の設定$dbに代入する
 $db = get_db_connect();
+
 // データベースに接続して、ユーザーデータを探して、代入する
 $user = get_login_user($db);
 
 // history_idを変数に代入する
 $history_id = get_get('history_id');
+
 // 代入したhistory_idが入っているかの検証
 if ($history_id === '') {
   set_error('不正なアクセスです。');

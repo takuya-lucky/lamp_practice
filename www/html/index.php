@@ -25,13 +25,13 @@ $user = get_login_user($db);
 $now = get_now_page();
 
 // 並び替えの要素を代入する
-$change_position = get_get('change_position','new_item');
+$sort_item = get_get('sort_item','new_item');
+
 // 並び替えによる商品一覧の取得
-$items = sort_items($db,true,$change_position);
+$items = sort_items($db,true,$sort_item);
 
-
-// 商品の取得
-$num_items = get_count_items($db);
+// 全公開商品の取得
+$num_items = get_count_open_items($db);
 
 // 全てのデータを表示するのに必要なページ数(商品数/ページに表示できる商品数)
 $page_max = ceil($num_items / PAGE_VIEW_MAX);
@@ -42,14 +42,14 @@ if ($now > $page_max) {
   redirect_to(HOME_URL);
 }
 
-// 商品の売り上げランキングの実装
+// 商品の人気(売り上げ)ランキングの実装
 $sale_ranking = sale_ranking($db);
 
 // 現在のページの表示の最初を出力
-$front_select = get_front_select();
+$current_page_start_num = get_current_page_start_num();
 
 // 現在のページの表示の最後を出力
-$behind_select = get_behind_select($num_items);
+$current_page_end_num = get_current_page_end_num($num_items);
 
 // トークンの生成とセット
 $token = get_csrf_token();

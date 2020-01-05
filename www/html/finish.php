@@ -34,14 +34,16 @@ $carts = get_user_carts($db, $user['user_id']);
 $db->beginTransaction();
 
 // 購入履歴の保存
-$make_history = make_purchase_history($db, $user['user_id']);
+$purchase_history = insert_purchase_history($db, $user['user_id']);
+
 // history_idをorder_historyから取得する
 $history_id = $db->lastInsertID('history_id');
+
 // 購入明細の保存
-$make_detail =  make_purchase_detail($db, $history_id, $carts); 
+$purchase_detail =  insert_purchase_detail($db, $history_id, $carts); 
 
 // 商品購入の処理を行い、エラーがあれば、cart.phpに移動する。購入履歴の保存・購入明細の保存の処理で、成功しているときのみcommitを行う。失敗の場合はエラーメッセージの挿入。
-if(purchase_carts($db, $carts) === false && $make_history === false && $make_detail === false){
+if(purchase_carts($db, $carts) === false && $purchase_history === false && $purchase_detail === false){
   $db->rollBack();
   set_error('商品が購入できませんでした。');
   redirect_to(CART_URL);

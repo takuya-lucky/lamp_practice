@@ -87,3 +87,21 @@ define('FRAME_OPTION', 'X-Frame-Options: DENY');
 
 // 購入履歴でページに表示する最大数
 define('PAGE_VIEW_MAX', 8);
+
+// cookieを削除するために利用する値
+define('DELETE_COOKIE_TIME', 42000);
+
+// トークンの長さ
+define('TOKEN_LENGTH', 20);
+
+// hashの種類
+define('HASH_ALGORITHM', 'sha256');
+
+// 進数表記(sha256を利用する為)
+define('HASH_BASE_NUM', 16);
+
+// 進数表記(全ての英数字を利用する為)
+define('ALPHANUMERIC_BASE_NUM', 36);
+
+// トークンに利用する文字数
+define('USE_TOKEN_LENGTH', 48);

@@ -19,6 +19,7 @@ validate_csrf_token();
 
 // post送信で送られてきた'name'を$nameに代入する
 $name = get_post('name');
+
 // post送信で送られてきた'password'を$passwordに代入する
 $password = get_post('password');
 
@@ -36,6 +37,7 @@ if( $user === false){
 
 // ログインしたというメッセージを出す
 set_message('ログインしました。');
+
 // ユーザー情報が管理者の場合はadmin.php、通常のユーザーの場合にはindex.phpに移動する
 if ($user['type'] === USER_TYPE_ADMIN){
   redirect_to(ADMIN_URL);

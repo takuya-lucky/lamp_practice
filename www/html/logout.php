@@ -11,8 +11,9 @@ $_SESSION = array();
 
 // セッションクッキーの情報を$paramsに代入する
 $params = session_get_cookie_params();
+
 // cookieの削除
-setcookie(session_name(), '', time() - 42000,
+setcookie(session_name(), '', time() - DELETE_COOKIE_TIME,
   $params["path"], 
   $params["domain"],
   $params["secure"], 
